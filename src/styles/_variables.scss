@@ -1,0 +1,44 @@
+$header-font: var(--font-geist-sans),
+  -apple-system,
+  BlinkMacSystemFont,
+  Segoe UI,
+  Roboto,
+  Oxygen,
+  Ubuntu,
+  Cantarell,
+  Fira Sans,
+  Droid Sans,
+  Helvetica Neue,
+  sans-serif;
+$body-font: var(--font-geist-sans),
+  -apple-system,
+  BlinkMacSystemFont,
+  Segoe UI,
+  Roboto,
+  Oxygen,
+  Ubuntu,
+  Cantarell,
+  Fira Sans,
+  Droid Sans,
+  Helvetica Neue,
+  sans-serif;
+
+$white: #ffffff;
+$black: #000000;
+$surface: #141419;
+$shade: #363640;
+$green: #80E038;
+
+$common-shadow: -4px 0 4px rgba($black, 0.2);
+
+$transition-default: 250ms ease-in-out all;
+
+$screen_xs: 550px;
+$screen_sm: 760px;
+$screen_md: 1020px;
+$screen_lg: 1270px;
+$screen_xl: 1420px;
+$screen_xxl: 1600px;
+$screen_xxxl: 1920px;
+
+$max-width: 448px;

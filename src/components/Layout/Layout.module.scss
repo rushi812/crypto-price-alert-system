@@ -1,0 +1,28 @@
+@use "../../styles" as *;
+
+.root {
+  position: relative;
+  flex-grow: 1;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: $black;
+  color: $white;
+  background-size: cover;
+}
+
+.main {
+  flex: 1 1 calc(100vh - 8rem);
+  position: relative;
+
+  @media (max-width: $screen_sm) {
+    flex: 1 1 calc(100vh - 15rem);
+  }
+}
+
+.loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
