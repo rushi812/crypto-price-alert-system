@@ -1,0 +1,25 @@
+@use "../../styles" as *;
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: $screen_lg;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  @media (max-width: $screen_lg) {
+    max-width: $screen_md;
+  }
+
+  @media (max-width: $screen_md) {
+    max-width: $screen_sm;
+  }
+
+  @media (max-width: $screen_sm) {
+    max-width: $screen_xs;
+  }
+
+  @media (max-width: $screen_xs) {
+    max-width: unset;
+  }
+}

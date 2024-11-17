@@ -12,12 +12,8 @@
 }
 
 .main {
-  flex: 1 1 calc(100vh - 8rem);
+  flex: 1 1 100svh;
   position: relative;
-
-  @media (max-width: $screen_sm) {
-    flex: 1 1 calc(100vh - 15rem);
-  }
 }
 
 .loading {

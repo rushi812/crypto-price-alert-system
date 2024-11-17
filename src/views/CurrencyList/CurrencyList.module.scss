@@ -1,0 +1,50 @@
+@use '../../styles' as *;
+
+.headerCell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 5rem;
+  padding: 1.5rem !important;
+  background-color: rgba($shade, 0.7);
+}
+
+.row {
+  background-color: $surface;
+  transition: $transition-default;
+
+  &:hover {
+    background-color: rgba($surface, 0.8);
+  }
+}
+
+.bodyCell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  height: 8.5rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba($shade, 0.5);
+
+  @media (max-width: $screen_sm) {
+    background-color: $surface;
+  }
+
+}
+
+.coinImage {
+  position: relative;
+  height: 3rem;
+  width: 3rem;
+}
+
+.alert {
+  background-color: transparent;
+  border: 1px solid $lightgreen;
+  color: $lightgreen;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}

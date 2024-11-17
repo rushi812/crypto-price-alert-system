@@ -1,0 +1,40 @@
+@import "src/styles/variables";
+
+.root {
+  font-family: $header-font;
+  word-wrap: break-word;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.normal {
+  font-style: normal;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.white {
+  color: $white;
+}
+
+.green {
+  color: $green;
+}
+
+.black {
+  color: $black;
+}
+
+
