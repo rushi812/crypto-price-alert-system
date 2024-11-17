@@ -1,24 +1,27 @@
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import { Col, Row } from "react-grid-system";
 
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { useCryptoCurrencyList } from "@api/Crypto";
 import { formatPrice } from "@utils/formatPrice";
 
 import Image from "@components/Image";
+import PricePercentage from "@components/PricePercentage";
 import Text from "@components/Text";
 
 import { CurrencyType } from "../../types/CryptoType";
+import AlertModal from "./AlertModal";
 import styles from "./CurrencyList.module.scss";
 
 const CurrencyList: React.FC<CurrencyListProps> = () => {
-  const { data: currencyList } = useCryptoCurrencyList();
+  const [alertModal, setAlertModal] = useState<CurrencyType>();
+
+  const { data: currencyList, isLoading } = useCryptoCurrencyList();
 
   const handlePriceAlert = (currency: CurrencyType) => {
-    console.log("RB:: Price Alert for:", currency.name);
+    setAlertModal(currency);
   };
 
   const renderTableHeader = () => (
@@ -79,22 +82,6 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
     </div>
   );
 
-  const renderPercentage = (value: number) => {
-    if (value > 0)
-      return (
-        <div className="flex align-center justify-end">
-          <ArrowDropUpIcon sx={{ color: "#32ca5b", fontSize: 20 }} />
-          <Text color="green">{`${value.toFixed(2)}%`}</Text>
-        </div>
-      );
-    return (
-      <div className="flex align-center justify-end">
-        <ArrowDropDownIcon sx={{ color: "#ff3a33", fontSize: 20 }} />
-        <Text color="red">{`${value.toFixed(2).replace("-", "")}%`}</Text>
-      </div>
-    );
-  };
-
   const renderTableBody = () =>
     currencyList?.map((currency, index) => {
       const {
@@ -130,17 +117,17 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
           </Col>
           <Col xs={3} md={1}>
             <Text align="right" className={styles.bodyCell}>
-              {renderPercentage(price_change_percentage_1h_in_currency)}
+              <PricePercentage price={price_change_percentage_1h_in_currency} />
             </Text>
           </Col>
           <Col xs={3} md={1}>
             <Text align="right" className={styles.bodyCell}>
-              {renderPercentage(price_change_percentage_24h_in_currency)}
+              <PricePercentage price={price_change_percentage_24h_in_currency} />
             </Text>
           </Col>
           <Col xs={3} md={1}>
             <Text align="right" className={styles.bodyCell}>
-              {renderPercentage(price_change_percentage_7d_in_currency)}
+              <PricePercentage price={price_change_percentage_7d_in_currency} />
             </Text>
           </Col>
           <Col xs={5} md={2}>
@@ -157,11 +144,21 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
       );
     });
 
+  if (isLoading)
+    return (
+      <div className={styles.loader}>
+        <CircularProgress size="8rem" color="success" />
+      </div>
+    );
+
   return (
-    <div className="scroll-grid">
-      {renderTableHeader()}
-      {renderTableBody()}
-    </div>
+    <>
+      <div className="scroll-grid">
+        {renderTableHeader()}
+        {renderTableBody()}
+      </div>
+      {!!alertModal && <AlertModal open onClose={() => setAlertModal(undefined)} currency={alertModal} />}
+    </>
   );
 };
 
