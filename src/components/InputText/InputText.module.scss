@@ -1,0 +1,57 @@
+@import "src/styles/variables";
+
+.root {
+  position: relative;
+}
+
+.input {
+  font-family: $body-font;
+  font-size: 16px;
+  font-weight: 400;
+  color: $white;
+  padding: 0 2rem;
+  width: 100%;
+  border: 1px solid $shade2;
+  transition: $transition-default;
+  border-radius: 1rem;
+  height: 6rem;
+
+  &::placeholder {
+    color: $shade2;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $green;
+
+    & + .search {
+      svg {
+        color: $white;
+      }
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.error {
+    outline-color: $red;
+    border-color: $red;
+  }
+}
+
+
+.errorText {
+  font-family: $body-font;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: $red;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+}
+
+
+
+

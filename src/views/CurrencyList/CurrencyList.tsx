@@ -24,6 +24,10 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
     setAlertModal(currency);
   };
 
+  const handleSubmit = (values: any) => {
+    console.log("RB:: values", values);
+  };
+
   const renderTableHeader = () => (
     <Row gutterWidth={0} align="center" wrap="nowrap">
       <Col xs={1.5} md={1}>
@@ -157,7 +161,9 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
         {renderTableHeader()}
         {renderTableBody()}
       </div>
-      {!!alertModal && <AlertModal open onClose={() => setAlertModal(undefined)} currency={alertModal} />}
+      {!!alertModal && (
+        <AlertModal open onClose={() => setAlertModal(undefined)} currency={alertModal} onSubmit={handleSubmit} />
+      )}
     </>
   );
 };

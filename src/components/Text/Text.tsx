@@ -35,7 +35,7 @@ Text.defaultProps = {
 };
 
 export type TextProps = React.HTMLAttributes<any> & {
-  color?: "white" | "green" | "$lightgreen" | "red" | "black" | "shade" | "grey";
+  color?: "white" | "green" | "$lightgreen" | "red" | "black" | "shade" | "shade2" | "grey";
   weight?: "normal" | "medium" | "bold" | "heavy";
   size?: "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
   align?: "left" | "center" | "right" | "justify";

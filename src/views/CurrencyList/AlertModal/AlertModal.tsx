@@ -1,11 +1,15 @@
-import React, { ReactNode, useState } from "react";
+import { useFormik } from "formik";
+import React, { ReactNode } from "react";
+import * as Yup from "yup";
 
 import Close from "@mui/icons-material/Close";
 import { IconButton, Modal } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import useBreakpoint from "@hooks/useBreakpoint";
 import { formatPrice } from "@utils/formatPrice";
 
+import InputText from "@components/InputText";
 import PricePercentage from "@components/PricePercentage";
 import Text from "@components/Text";
 import Title from "@components/Title";
@@ -14,16 +18,23 @@ import { CurrencyType } from "../../../types/CryptoType";
 import styles from "./AlertModal.module.scss";
 
 const AlertModal: React.FC<ModalProps> = (props) => {
-  const [inputValue, setInputValue] = useState("");
-  const { open, onClose, currency } = props;
+  const { open, onClose, currency, onSubmit } = props;
+
   const isMobile = useBreakpoint({ max: "sm" });
+
+  const validationSchema = Yup.object().shape({
+    price: Yup.string().required("Target Price is required"),
+    email: Yup.string().email("Invalid email id").required("Email is required"),
+  });
+  const initialValues = { price: "", email: "" };
+  const { handleSubmit, errors, values, touched, isSubmitting, handleChange, handleBlur, isValid } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
   const handleClose = (event?: any, reason?: "backdropClick" | "escapeKeyDown") => {
     if (onClose) onClose(event, reason);
-  };
-
-  const handleCreateAlert = () => {
-    console.log("RB:: Target Price", inputValue);
   };
 
   return (
@@ -51,21 +62,48 @@ const AlertModal: React.FC<ModalProps> = (props) => {
               </IconButton>
             </div>
           </header>
-          <div className="relative">
-            <div className="flex column gap10">
-              <Text size={isMobile ? "xl" : "lg"}>Target Price</Text>
-              <input
-                value={inputValue}
-                className={styles.priceInput}
-                placeholder="Enter Target Price"
-                autoFocus
-                onChange={(e) => setInputValue(e.target.value)}
-              />
+          <form onSubmit={handleSubmit}>
+            <div className="flex column gap20">
+              <div className="flex column gap10">
+                <Text size={isMobile ? "xl" : "lg"} color="shade2">
+                  Target Price
+                </Text>
+                <InputText
+                  classes={{ root: "flex-auto" }}
+                  error={touched.price ? errors.price : ""}
+                  disabled={isSubmitting}
+                  type="text"
+                  id="price"
+                  name="price"
+                  value={values.price}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Enter Target Price"
+                />
+              </div>
+              <div className="flex column gap10">
+                <Text size={isMobile ? "xl" : "lg"} color="shade2">
+                  Email
+                </Text>
+                <InputText
+                  classes={{ root: "flex-auto" }}
+                  error={touched.email ? errors.email : ""}
+                  disabled={isSubmitting}
+                  type="text"
+                  id="email"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Enter Your Email"
+                />
+              </div>
+              <button type="submit" className={styles.button} disabled={!isValid || isSubmitting}>
+                Create Alert
+                {isSubmitting && <CircularProgress size={20} className={styles.loading} />}
+              </button>
             </div>
-            <button className={styles.button} onClick={handleCreateAlert} disabled={!inputValue}>
-              Create Alert
-            </button>
-          </div>
+          </form>
         </div>
       </>
     </Modal>
@@ -77,6 +115,7 @@ export type ModalProps = {
   onClose?: (event?: any, reason?: "backdropClick" | "escapeKeyDown") => any;
   actions?: ReactNode;
   currency: CurrencyType;
+  onSubmit: (values: any) => void;
 };
 
 export default AlertModal;
