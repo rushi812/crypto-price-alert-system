@@ -30,7 +30,7 @@ const AlertModal: React.FC<ModalProps> = (props) => {
   const { handleSubmit, errors, values, touched, isSubmitting, handleChange, handleBlur, isValid } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit,
+    onSubmit: (values) => onSubmit({ ...values, id: currency.id }),
   });
 
   const handleClose = (event?: any, reason?: "backdropClick" | "escapeKeyDown") => {
@@ -44,68 +44,66 @@ const AlertModal: React.FC<ModalProps> = (props) => {
       slotProps={{ backdrop: { timeout: 500, className: styles.backdrop } }}
       closeAfterTransition
     >
-      <>
-        <div className={styles.root}>
-          <header className={styles.header}>
-            <div className="flex align-center justify-between">
-              <div>
-                <Title variant={isMobile ? "h2" : "h1"}>{currency.name}</Title>
-                <div className="flex align-center gap5">
-                  <Text color="grey" size="lg">
-                    {formatPrice(currency.current_price)}
-                  </Text>
-                  <PricePercentage price={currency.price_change_percentage_1h_in_currency} />
-                </div>
-              </div>
-              <IconButton onClick={onClose} color="primary">
-                <Close sx={{ fontSize: "2.5rem" }} />
-              </IconButton>
-            </div>
-          </header>
-          <form onSubmit={handleSubmit}>
-            <div className="flex column gap20">
-              <div className="flex column gap10">
-                <Text size={isMobile ? "xl" : "lg"} color="shade2">
-                  Target Price
+      <div className={styles.root}>
+        <header className={styles.header}>
+          <div className="flex align-center justify-between">
+            <div>
+              <Title variant={isMobile ? "h2" : "h1"}>{currency.name}</Title>
+              <div className="flex align-center gap5">
+                <Text color="grey" size="lg">
+                  {formatPrice(currency.current_price)}
                 </Text>
-                <InputText
-                  classes={{ root: "flex-auto" }}
-                  error={touched.price ? errors.price : ""}
-                  disabled={isSubmitting}
-                  type="text"
-                  id="price"
-                  name="price"
-                  value={values.price}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder="Enter Target Price"
-                />
+                <PricePercentage price={currency.price_change_percentage_1h_in_currency} />
               </div>
-              <div className="flex column gap10">
-                <Text size={isMobile ? "xl" : "lg"} color="shade2">
-                  Email
-                </Text>
-                <InputText
-                  classes={{ root: "flex-auto" }}
-                  error={touched.email ? errors.email : ""}
-                  disabled={isSubmitting}
-                  type="text"
-                  id="email"
-                  name="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder="Enter Your Email"
-                />
-              </div>
-              <button type="submit" className={styles.button} disabled={!isValid || isSubmitting}>
-                Create Alert
-                {isSubmitting && <CircularProgress size={20} className={styles.loading} />}
-              </button>
             </div>
-          </form>
-        </div>
-      </>
+            <IconButton onClick={onClose} color="primary">
+              <Close sx={{ fontSize: "2.5rem" }} />
+            </IconButton>
+          </div>
+        </header>
+        <form onSubmit={handleSubmit}>
+          <div className="flex column gap20">
+            <div className="flex column gap10">
+              <Text size={isMobile ? "xl" : "lg"} color="shade2">
+                Target Price
+              </Text>
+              <InputText
+                classes={{ root: "flex-auto" }}
+                error={touched.price ? errors.price : ""}
+                disabled={isSubmitting}
+                type="text"
+                id="price"
+                name="price"
+                value={values.price}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Enter Target Price"
+              />
+            </div>
+            <div className="flex column gap10">
+              <Text size={isMobile ? "xl" : "lg"} color="shade2">
+                Email
+              </Text>
+              <InputText
+                classes={{ root: "flex-auto" }}
+                error={touched.email ? errors.email : ""}
+                disabled={isSubmitting}
+                type="text"
+                id="email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Enter Your Email"
+              />
+            </div>
+            <button type="submit" className={styles.button} disabled={!isValid || isSubmitting}>
+              Create Alert
+              {isSubmitting && <CircularProgress size={20} className={styles.loading} />}
+            </button>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 };
