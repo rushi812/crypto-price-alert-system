@@ -26,7 +26,7 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
   };
 
   const handleSubmit = (values: any) => {
-    return fetchAPI("/api/subscription", { method: "POST", body: JSON.stringify(values) });
+    return fetchAPI("/api/subscriptions", { method: "POST", body: JSON.stringify(values) });
   };
 
   const renderTableHeader = () => (

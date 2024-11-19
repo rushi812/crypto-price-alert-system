@@ -30,7 +30,7 @@ const AlertModal: React.FC<ModalProps> = (props) => {
   const { handleSubmit, errors, values, touched, isSubmitting, handleChange, handleBlur, isValid } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => onSubmit({ ...values, id: currency.id }),
+    onSubmit: (values) => onSubmit({ ...values, price: Number(values.price), id: currency.id }),
   });
 
   const handleClose = (event?: any, reason?: "backdropClick" | "escapeKeyDown") => {
