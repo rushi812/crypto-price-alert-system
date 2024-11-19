@@ -14,6 +14,7 @@ export async function fetchAPI<T>(url: string, config?: RequestInit): Promise<T 
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
   headers.append("Access-Control-Allow-Origin", "*");
+  headers.append("Referrer-Policy", "no-referrer");
   const response = await fetch(API_BASE_URL_SERVER + url, { headers, ...config });
   const data = await response.json();
 
