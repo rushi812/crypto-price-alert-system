@@ -13,7 +13,7 @@ export async function apiFetcher(url: string, config?: RequestInit) {
 export async function fetchAPI<T>(url: string, config?: RequestInit): Promise<T | null> {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
-  const response = await fetch("http://localhost:4000" + url, { headers, ...config });
+  const response = await fetch(API_BASE_URL_SERVER + url, { headers, ...config });
   const data = await response.json();
 
   if (response.status >= 200 && response.status < 300) return data?.data;
