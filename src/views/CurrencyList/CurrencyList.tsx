@@ -5,6 +5,7 @@ import { Col, Row } from "react-grid-system";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useCryptoCurrencyList } from "@api/Crypto";
+import { fetchAPI } from "@api/helpers";
 import { formatPrice } from "@utils/formatPrice";
 
 import Image from "@components/Image";
@@ -25,7 +26,7 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
   };
 
   const handleSubmit = (values: any) => {
-    console.log("RB:: values", values);
+    return fetchAPI("/api/subscription", { method: "POST", body: JSON.stringify(values) });
   };
 
   const renderTableHeader = () => (
@@ -40,7 +41,6 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
           Coin
         </Text>
       </Col>
-      <Col xs={4} md={1.5} className={styles.headerCell}></Col>
       <Col xs={3} md={1}>
         <Text align="right" weight="heavy" className={styles.headerCell}>
           Price
@@ -71,6 +71,7 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
           Market Cap
         </Text>
       </Col>
+      <Col xs={4} md={1.5} className={styles.headerCell}></Col>
     </Row>
   );
 
@@ -107,13 +108,6 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
           <Col xs={5} md={1.5}>
             {renderCoinInfo(currency)}
           </Col>
-          <Col xs={3} md={1.5}>
-            <div className={styles.bodyCell}>
-              <button className={styles.alert} onClick={handlePriceAlert.bind(this, currency)}>
-                Create Alert
-              </button>
-            </div>
-          </Col>
           <Col xs={3} md={1}>
             <Text align="right" className={styles.bodyCell}>
               {formatPrice(current_price)}
@@ -143,6 +137,13 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
             <Text align="right" className={styles.bodyCell}>
               {formatPrice(market_cap)}
             </Text>
+          </Col>
+          <Col xs={3} md={1.5}>
+            <div className={styles.bodyCell}>
+              <button className={styles.alert} onClick={handlePriceAlert.bind(this, currency)}>
+                Create Alert
+              </button>
+            </div>
           </Col>
         </Row>
       );
