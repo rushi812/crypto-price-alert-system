@@ -28,11 +28,9 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
 
   const handleSubmit = (values: any) => {
     return fetchAPI("/api/subscriptions", { method: "POST", body: JSON.stringify(values) })
-      .then(() => {
-        setAlertModal(undefined);
-        enqueueSnackbar("Alert Subscription Successful!", { variant: "success" });
-      })
-      .catch((e) => enqueueSnackbar(e.message, { variant: "error" }));
+      .then(() => enqueueSnackbar("Alert Subscription Successful!", { variant: "success" }))
+      .catch((e) => enqueueSnackbar(e.message, { variant: "error" }))
+      .finally(() => setAlertModal(undefined));
   };
 
   const renderTableHeader = () => (

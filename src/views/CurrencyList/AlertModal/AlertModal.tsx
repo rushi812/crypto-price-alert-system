@@ -23,7 +23,13 @@ const AlertModal: React.FC<ModalProps> = (props) => {
   const isMobile = useBreakpoint({ max: "sm" });
 
   const validationSchema = Yup.object().shape({
-    price: Yup.string().required("Target Price is required"),
+    price: Yup.number()
+      .typeError("Target Price must be a number")
+      .positive("Target Price must be greater than 0")
+      .required("Target Price is required")
+      .test("is-decimal", "Target Price must have up to 2 decimal places", (value) =>
+        value ? /^\d+(\.\d{1,2})?$/.test(value.toString()) : true
+      ),
     email: Yup.string().email("Invalid email id").required("Email is required"),
   });
   const initialValues = { price: "", email: "" };
