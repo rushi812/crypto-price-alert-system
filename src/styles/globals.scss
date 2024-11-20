@@ -136,8 +136,47 @@ body {
   display: flex;
   flex-direction: column;
   background: $black;
+}
 
+.notistack {
+  &.notistack-SnackbarContainer {
+    padding: 0 2rem;
+    top: 2rem;
 
+    & > div {
+      width: 100%;
+    }
+
+    @media (max-width: $screen_sm) {
+      width: 100%;
+      top: 1.5rem;
+    }
+  }
+
+  .notistack-MuiContent {
+    flex-wrap: nowrap;
+    border-radius: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .notistack-CollapseWrapper {
+    padding: 0;
+  }
+
+  #notistack-snackbar {
+    font-family: $body-font;
+    font-size: 1.75rem;
+    font-weight: 400;
+    padding: 0;
+  }
+
+  .notistack-MuiContent-error {
+    background-color: $red;
+  }
+
+  .notistack-MuiContent-success {
+    background-color: $green;
+  }
 }
 
 #__next,

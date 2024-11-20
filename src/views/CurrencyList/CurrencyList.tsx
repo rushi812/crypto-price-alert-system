@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { Col, Row } from "react-grid-system";
 
@@ -18,7 +19,7 @@ import styles from "./CurrencyList.module.scss";
 
 const CurrencyList: React.FC<CurrencyListProps> = () => {
   const [alertModal, setAlertModal] = useState<CurrencyType>();
-
+  const { enqueueSnackbar } = useSnackbar();
   const { data: currencyList, isLoading } = useCryptoCurrencyList();
 
   const handlePriceAlert = (currency: CurrencyType) => {
@@ -26,7 +27,12 @@ const CurrencyList: React.FC<CurrencyListProps> = () => {
   };
 
   const handleSubmit = (values: any) => {
-    return fetchAPI("/api/subscriptions", { method: "POST", body: JSON.stringify(values) });
+    return fetchAPI("/api/subscriptions", { method: "POST", body: JSON.stringify(values) })
+      .then(() => {
+        setAlertModal(undefined);
+        enqueueSnackbar("Alert Subscription Successful!", { variant: "success" });
+      })
+      .catch((e) => enqueueSnackbar(e.message, { variant: "error" }));
   };
 
   const renderTableHeader = () => (
