@@ -1,0 +1,5 @@
+[[redirects]]
+from = "/api/subscriptions"
+to = "http://13.203.87.15:4000/api/subscriptions"
+status = 200
+force = true
